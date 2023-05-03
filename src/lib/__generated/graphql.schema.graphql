@@ -121,7 +121,7 @@ enum AssetOrder {
 }
 
 """
-This model describes an author for an article [See type definition](https://app.contentful.com/spaces/nvxmqufxogry/content_types/componentAuthor)
+To have author-related properties [See type definition](https://app.contentful.com/spaces/lex6t60448sf/content_types/componentAuthor)
 """
 type ComponentAuthor implements Entry {
   avatar(locale: String, preview: Boolean): Asset
@@ -182,7 +182,94 @@ enum ComponentAuthorOrder {
 }
 
 """
-This model describes an image used in rich text fields. It has additional options that allow changing the layout of the image in a rich text block [See type definition](https://app.contentful.com/spaces/nvxmqufxogry/content_types/componentRichImage)
+[See type definition](https://app.contentful.com/spaces/lex6t60448sf/content_types/componentContentBlock)
+"""
+type ComponentContentBlock implements Entry {
+  content(locale: String): ComponentContentBlockContent
+  contentfulMetadata: ContentfulMetadata!
+  internalName(locale: String): String
+  linkedFrom(allowedLocales: [String]): ComponentContentBlockLinkingCollections
+  picture(locale: String, preview: Boolean): ComponentRichImage
+  picturePlacement(locale: String): String
+  sys: Sys!
+}
+
+type ComponentContentBlockCollection {
+  items: [ComponentContentBlock]!
+  limit: Int!
+  skip: Int!
+  total: Int!
+}
+
+type ComponentContentBlockContent {
+  json: JSON!
+  links: ComponentContentBlockContentLinks!
+}
+
+type ComponentContentBlockContentAssets {
+  block: [Asset]!
+  hyperlink: [Asset]!
+}
+
+type ComponentContentBlockContentEntries {
+  block: [Entry]!
+  hyperlink: [Entry]!
+  inline: [Entry]!
+}
+
+type ComponentContentBlockContentLinks {
+  assets: ComponentContentBlockContentAssets!
+  entries: ComponentContentBlockContentEntries!
+}
+
+input ComponentContentBlockFilter {
+  AND: [ComponentContentBlockFilter]
+  OR: [ComponentContentBlockFilter]
+  content_contains: String
+  content_exists: Boolean
+  content_not_contains: String
+  contentfulMetadata: ContentfulMetadataFilter
+  internalName: String
+  internalName_contains: String
+  internalName_exists: Boolean
+  internalName_in: [String]
+  internalName_not: String
+  internalName_not_contains: String
+  internalName_not_in: [String]
+  picture: cfComponentRichImageNestedFilter
+  picturePlacement: String
+  picturePlacement_contains: String
+  picturePlacement_exists: Boolean
+  picturePlacement_in: [String]
+  picturePlacement_not: String
+  picturePlacement_not_contains: String
+  picturePlacement_not_in: [String]
+  picture_exists: Boolean
+  sys: SysFilter
+}
+
+type ComponentContentBlockLinkingCollections {
+  entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
+  pageLandingCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): PageLandingCollection
+}
+
+enum ComponentContentBlockOrder {
+  internalName_ASC
+  internalName_DESC
+  picturePlacement_ASC
+  picturePlacement_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+To describe an image used in rich text fields [See type definition](https://app.contentful.com/spaces/lex6t60448sf/content_types/componentRichImage)
 """
 type ComponentRichImage implements Entry {
   caption(locale: String): String
@@ -227,6 +314,7 @@ input ComponentRichImageFilter {
 }
 
 type ComponentRichImageLinkingCollections {
+  componentContentBlockCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): ComponentContentBlockCollection
   entryCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): EntryCollection
 }
 
@@ -248,7 +336,7 @@ enum ComponentRichImageOrder {
 }
 
 """
-These fields are used to add SEO related properties to the various pages that we render [See type definition](https://app.contentful.com/spaces/nvxmqufxogry/content_types/componentSeo)
+To have SEO-related properties to the pages we render [See type definition](https://app.contentful.com/spaces/lex6t60448sf/content_types/componentSeo)
 """
 type ComponentSeo implements Entry {
   canonicalUrl(locale: String): String
@@ -543,7 +631,7 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 scalar JSON
 
 """
-This model is used to create an individual blog post [See type definition](https://app.contentful.com/spaces/nvxmqufxogry/content_types/pageBlogPost)
+To create individual blog posts [See type definition](https://app.contentful.com/spaces/lex6t60448sf/content_types/pageBlogPost)
 """
 type PageBlogPost implements Entry {
   author(locale: String, preview: Boolean): ComponentAuthor
@@ -615,6 +703,7 @@ input PageBlogPostFilter {
   publishedDate_lte: DateTime
   publishedDate_not: DateTime
   publishedDate_not_in: [DateTime]
+  relatedBlogPosts: cfPageBlogPostNestedFilter
   relatedBlogPostsCollection_exists: Boolean
   seoFields: cfComponentSeoNestedFilter
   seoFields_exists: Boolean
@@ -675,14 +764,16 @@ type PageBlogPostRelatedBlogPostsCollection {
 }
 
 """
-This model serves as the entry point for the app (Homepage). It automatically shows the six most recent articles at the bottom of the page, based on their publish date [See type definition](https://app.contentful.com/spaces/nvxmqufxogry/content_types/pageLanding)
+To have an entry point for the app (e.g. Homepage) [See type definition](https://app.contentful.com/spaces/lex6t60448sf/content_types/pageLanding)
 """
 type PageLanding implements Entry {
+  contentBlocksCollection(limit: Int = 100, locale: String, preview: Boolean, skip: Int = 0): PageLandingContentBlocksCollection
   contentfulMetadata: ContentfulMetadata!
   featuredBlogPost(locale: String, preview: Boolean): PageBlogPost
   internalName(locale: String): String
   linkedFrom(allowedLocales: [String]): PageLandingLinkingCollections
   seoFields(locale: String, preview: Boolean): ComponentSeo
+  slug(locale: String): String
   sys: Sys!
 }
 
@@ -693,9 +784,18 @@ type PageLandingCollection {
   total: Int!
 }
 
+type PageLandingContentBlocksCollection {
+  items: [ComponentContentBlock]!
+  limit: Int!
+  skip: Int!
+  total: Int!
+}
+
 input PageLandingFilter {
   AND: [PageLandingFilter]
   OR: [PageLandingFilter]
+  contentBlocks: cfComponentContentBlockNestedFilter
+  contentBlocksCollection_exists: Boolean
   contentfulMetadata: ContentfulMetadataFilter
   featuredBlogPost: cfPageBlogPostNestedFilter
   featuredBlogPost_exists: Boolean
@@ -708,6 +808,13 @@ input PageLandingFilter {
   internalName_not_in: [String]
   seoFields: cfComponentSeoNestedFilter
   seoFields_exists: Boolean
+  slug: String
+  slug_contains: String
+  slug_exists: Boolean
+  slug_in: [String]
+  slug_not: String
+  slug_not_contains: String
+  slug_not_in: [String]
   sys: SysFilter
 }
 
@@ -718,6 +825,8 @@ type PageLandingLinkingCollections {
 enum PageLandingOrder {
   internalName_ASC
   internalName_DESC
+  slug_ASC
+  slug_DESC
   sys_firstPublishedAt_ASC
   sys_firstPublishedAt_DESC
   sys_id_ASC
@@ -738,6 +847,8 @@ type Query {
   assetCollection(limit: Int = 100, locale: String, order: [AssetOrder], preview: Boolean, skip: Int = 0, where: AssetFilter): AssetCollection
   componentAuthor(id: String!, locale: String, preview: Boolean): ComponentAuthor
   componentAuthorCollection(limit: Int = 100, locale: String, order: [ComponentAuthorOrder], preview: Boolean, skip: Int = 0, where: ComponentAuthorFilter): ComponentAuthorCollection
+  componentContentBlock(id: String!, locale: String, preview: Boolean): ComponentContentBlock
+  componentContentBlockCollection(limit: Int = 100, locale: String, order: [ComponentContentBlockOrder], preview: Boolean, skip: Int = 0, where: ComponentContentBlockFilter): ComponentContentBlockCollection
   componentRichImage(id: String!, locale: String, preview: Boolean): ComponentRichImage
   componentRichImageCollection(limit: Int = 100, locale: String, order: [ComponentRichImageOrder], preview: Boolean, skip: Int = 0, where: ComponentRichImageFilter): ComponentRichImageCollection
   componentSeo(id: String!, locale: String, preview: Boolean): ComponentSeo
@@ -814,6 +925,56 @@ input cfComponentAuthorNestedFilter {
   name_not: String
   name_not_contains: String
   name_not_in: [String]
+  sys: SysFilter
+}
+
+input cfComponentContentBlockNestedFilter {
+  AND: [cfComponentContentBlockNestedFilter]
+  OR: [cfComponentContentBlockNestedFilter]
+  content_contains: String
+  content_exists: Boolean
+  content_not_contains: String
+  contentfulMetadata: ContentfulMetadataFilter
+  internalName: String
+  internalName_contains: String
+  internalName_exists: Boolean
+  internalName_in: [String]
+  internalName_not: String
+  internalName_not_contains: String
+  internalName_not_in: [String]
+  picturePlacement: String
+  picturePlacement_contains: String
+  picturePlacement_exists: Boolean
+  picturePlacement_in: [String]
+  picturePlacement_not: String
+  picturePlacement_not_contains: String
+  picturePlacement_not_in: [String]
+  picture_exists: Boolean
+  sys: SysFilter
+}
+
+input cfComponentRichImageNestedFilter {
+  AND: [cfComponentRichImageNestedFilter]
+  OR: [cfComponentRichImageNestedFilter]
+  caption: String
+  caption_contains: String
+  caption_exists: Boolean
+  caption_in: [String]
+  caption_not: String
+  caption_not_contains: String
+  caption_not_in: [String]
+  contentfulMetadata: ContentfulMetadataFilter
+  fullWidth: Boolean
+  fullWidth_exists: Boolean
+  fullWidth_not: Boolean
+  image_exists: Boolean
+  internalName: String
+  internalName_contains: String
+  internalName_exists: Boolean
+  internalName_in: [String]
+  internalName_not: String
+  internalName_not_contains: String
+  internalName_not_in: [String]
   sys: SysFilter
 }
 

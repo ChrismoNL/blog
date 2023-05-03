@@ -1,0 +1,24 @@
+{
+  "article": {
+    "relatedArticles": "Gerelateerde artikelen",
+    "featured": "uitgelicht"
+  },
+  "landingPage": {
+    "latestArticles": "Laatste artikelen"
+  },
+  "common": {
+    "regionalSettings": "Regionale instellingen",
+    "homepage": "Startpagina",
+    "language": "Taal",
+    "languageDrawer": "Taalmenu openen/sluiten"
+  },
+  "footer": {
+    "aboutUs": "Over ons",
+    "description": "Bij Chrismo.nl is onze missie om ontwikkelaars en technologieliefhebbers een uitgebreide bron te bieden voor het verkennen van de nieuwste trends en technologieën in ontwikkeling. Via ons blog streven we ernaar om ontwikkelaars te voorzien van de kennis en expertise die ze nodig hebben om de kunst van ontwikkeling onder de knie te krijgen, van code tot lancering. Of je nu een doorgewinterde professional bent of net begint, onze diepgaande artikelen en tutorials behandelen alles, van innovatieve oplossingen en strategieën tot experttips en -technieken. We zijn toegewijd om je op de hoogte te houden van het laatste nieuws en de nieuwste tools op het gebied van ontwikkeling, en om complexe onderwerpen op een manier uit te leggen die zowel beginners als professionals begrijpen. Doe met ons mee op deze reis van verkenning en ontdekking en ontgrendel de geheimen van succesvolle ontwikkeling met Chrismo.nl.",
+    "copyright": "© Copyright 2008 - {0} Chrismo B.V."
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "description": "Deze pagina lijkt niet te bestaan. <0>Klik hier</0> om terug te gaan naar de startpagina."
+  }
+}

@@ -28,7 +28,7 @@ export const SeoFields = ({
 
   return (
     <NextSeo
-      title={pageTitle || undefined}
+      title={pageTitle || "Chrismo"}
       description={pageDescription || undefined}
       canonical={canonicalUrl || url || ''}
       nofollow={nofollow || false}

@@ -13,9 +13,9 @@
     "languageDrawer": "Toggle language drawer"
   },
   "footer": {
-    "aboutUs": "about us",
-    "description": "Our company specialises in the development of advanced technologies for a wide range of industries. We use cutting-edge techniques and algorithms to create intelligent systems that can help businesses automate tasks, improve efficiency, and drive innovation.",
-    "powerBy": "Powered by"
+    "aboutUs": "about Chrismo",
+    "description": "At Chrismo.nl, our mission is to provide developers and technology enthusiasts with a comprehensive resource for exploring the latest trends and technologies in development. Through our blog, we strive to empower developers with the knowledge and expertise they need to master the art of development, from code to launch. Whether you're a seasoned pro or just getting started, our in-depth articles and tutorials cover everything from innovative solutions and strategies to expert tips and techniques. We are dedicated to keeping you up-to-date on the latest development news and tools, and to breaking down complex topics in a way that's easy for beginners and pros alike to understand. Join us on this journey of exploration and discovery, and unlock the secrets to successful development with Chrismo.nl.",
+    "copyright": "© Copyright 2008 - {0} Chrismo B.V."
   },
   "notFound": {
     "title": "Page not found",
